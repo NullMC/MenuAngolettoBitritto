@@ -1,0 +1,55 @@
+.hero-header {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    height: 37rem;
+    width: 100%;
+    background-image: url(IMGS/home.webp);
+    background-size: cover;
+    background-position: center;
+  }
+
+.hero-header::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background-color: #fff;
+    clip-path: polygon(100% 50%, 0 100%, 100% 100%);
+    margin-bottom: -1px;
+    z-index: 1;
+}
+
+
+@media (max-width: 768px){
+    .hero-header::before{
+        clip-path: polygon(100% 70%, 0 100%, 100% 100%);
+    }
+}
+
+@media (max-width: 480px){
+    .hero-header::before{
+        clip-path: polygon(100% 80%, 0 100%, 100% 100%);
+    }
+}
+
+@media (max-height: 428px){
+    .hero-header{
+        height: 60rem;
+    }
+    .hero-header::before{
+        clip-path: polygon(100% 80%, 0 100%, 100% 100%);
+        z-index: 2;
+    }
+}
+@media (max-width: 428px){
+    .hero-header{
+        height: 50rem;
+    }
+    .hero-header::before{
+        clip-path: polygon(100% 80%, 0 100%, 100% 100%);
+        z-index: 2;
+    }
+}

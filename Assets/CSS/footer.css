@@ -1,0 +1,84 @@
+footer{
+    margin-top: 5rem;
+
+    -webkit-box-shadow: -3px 10px 50px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 10px 50px -10px rgba(0,0,0,0.75);
+    box-shadow: -3px 10px 50px -10px rgba(0,0,0,0.75);
+}
+
+.content-container{
+    display: flex;
+    justify-content: space-between;
+
+    background-image: url(IMGS/marmo\ bianco.webp);
+    background-size: cover;
+    background-position: center;
+    padding: 1rem;
+}
+
+.content-container .left-section{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.content-container ul{
+    list-style-type: none;
+}
+
+.social-icons{
+    display: flex;
+    margin-left: -2.5rem;
+}
+
+.icons a{
+    margin-right: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    background-image: url('IMGS/marmo\ nero.webp');
+    background-clip: text;
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    color: transparent;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.3);
+}
+
+.general-info{
+    margin-bottom: 2rem;
+
+    background-image: url('IMGS/marmo\ nero.webp');
+    background-clip: text;
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    color: transparent;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.3);
+}
+
+.right-section{
+    background-image: url('IMGS/marmo\ nero.webp');
+    background-clip: text;
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    color: transparent;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.3);
+
+    text-align: right;
+}
+
+.contact-info .contacts{
+    margin-bottom: 1rem;
+}
+
+.contacts span{
+    margin-left: 1rem;
+}
