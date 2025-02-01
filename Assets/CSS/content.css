@@ -112,16 +112,15 @@
     text-align: center;
 }
 
-
-
-.menu-container{
-    margin-top: 5rem;
+#menu{
     display: flex;
-    align-items: stretch;
+    flex-flow: column;
+    align-items: center;
+    justify-self: center;
 }
 
 #menu h2{
-    margin: 15rem 5rem 0rem 5rem;
+    margin: 15rem 2rem 0rem 2rem;
     text-align: center;
     font-size: 4rem;
     border-bottom: solid 1px #dedede;
@@ -133,49 +132,7 @@
     color: transparent;
 }
 
-.menu25{
+.carousel{
     margin-top: 5rem;
-    display: inline;
-    width: 70%;
-}
-
-.menu-list{
-    display: inline;
-    float: right;
-}
-.menu25 img{
-    margin: 4vw;
-    width: 35vw;
-    height: auto;
-
-}
-
-.menu25 p{
-    text-align: center;
-    margin-right: 35%;
-}
-
-.menu-list .grafico{
-    margin: 2vw;
-    width: 15vw;
-}
-
-.menu-list ul{
-    display: inline-flex;
-    flex-flow: column;
-    list-style-type: none;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.descrizione-menu{
-    font-weight: 550;
-}
-
-.descrizione-menu .descrizione{
-    font-weight: 400;
-}
-
-.descrizione-menu .prezzo{
-    font-weight: 700;
+    width: 40%;
 }
