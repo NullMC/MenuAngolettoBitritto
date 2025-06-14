@@ -366,7 +366,37 @@ document.addEventListener('keydown', function(e) {
     } else if (e.key === 'Escape') {
         closeMobileMenu();
     }
+});document.addEventListener('DOMContentLoaded', function() {
+    initializeCarousel();
+    initializeDropdowns();
+    initializeSpecialCarousel();
+
+    // Add touch event listeners to carousel (after DOM is ready)
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        carousel.addEventListener('touchstart', handleTouchStart, false);
+        carousel.addEventListener('touchend', handleTouchEnd, false);
+    }
 });
+
+function initializeDropdowns() {
+    // Add click event listeners to all dropdown buttons
+    const dropdownButtons = document.querySelectorAll('.dropdown-button');
+    dropdownButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const sectionId = this.dataset.sectionId;
+            if (sectionId) {
+                toggleDropdown(sectionId);
+            }
+        });
+    });
+}
+
+// Remove the immediate scroll handler and only use the debounced one
+window.addEventListener('scroll', debouncedScrollHandler);
+
+// Remove this line, as it is invalid and unnecessary
+// window.removeEventListener('scroll', window.addEventListener);
 
 // Initialize animations on page load
 window.addEventListener('load', function() {
