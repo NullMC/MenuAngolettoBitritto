@@ -861,3 +861,189 @@ html {
 .dropdown-content.open {
     transition: max-height 0.5s ease-in;
 }
+
+
+/* CORREZIONI PER LA SEZIONE SPECIAL MENUS SU MOBILE */
+
+/* Aggiunta delle media queries mancanti per la sezione special-menus */
+@media (max-width: 768px) {
+    .special-menus {
+        padding: 60px 0;
+        margin: 3rem 0 6rem 0;
+    }
+    
+    .special-carousel {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    .special-content {
+        grid-template-columns: 1fr; /* Una sola colonna su mobile */
+        gap: 20px;
+        padding: 20px;
+        min-height: auto;
+        text-align: center;
+    }
+    
+    .chart-container {
+        order: -1; /* Mette il grafico sopra il testo */
+        margin-bottom: 20px;
+    }
+    
+    .pie-chart svg {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .percentage-text {
+        font-size: 1.5rem;
+    }
+    
+    .special-menu-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .menu-items-list li {
+        font-size: 0.9rem;
+        text-align: left;
+    }
+    
+    .price-comparison {
+        padding: 15px;
+    }
+    
+    .special-price {
+        font-size: 1.1rem;
+    }
+    
+    .savings {
+        font-size: 1rem;
+    }
+    
+    /* Correzione per i pulsanti di navigazione */
+    .special-nav {
+        width: 20px;
+        height: 20px;
+        font-size: 7px;
+    }
+    
+    .special-nav.prev {
+        left: 10px;
+    }
+    
+    .special-nav.next {
+        right: 10px;
+    }
+    
+    /* Correzione per i dots */
+    .special-dots {
+        margin-top: 20px;
+    }
+    
+    .special-dot {
+        width: 10px;
+        height: 10px;
+        margin: 1rem 0 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .special-menus {
+        padding: 40px 0;
+        margin: 2rem 0 4rem 0;
+    }
+    
+    .special-content {
+        padding: 15px;
+    }
+    
+    .pie-chart svg {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .percentage-text {
+        font-size: 1.2rem;
+    }
+    
+    .special-menu-title {
+        font-size: 1.5rem;
+    }
+    
+    .menu-items-list li {
+        font-size: 0.8rem;
+        gap: 10px;
+    }
+    
+    .menu-items-list i {
+        width: 15px;
+    }
+    
+    .price-comparison {
+        padding: 12px;
+    }
+    
+    .special-price {
+        font-size: 1rem;
+    }
+    
+    .savings {
+        font-size: 0.9rem;
+    }
+}
+
+/* CORREZIONE SPECIFICA PER IL LAYOUT GRID CHE CAUSA OVERFLOW */
+@media (max-width: 768px) {
+    .special-carousel-container {
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    
+    .special-slide {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    /* Assicura che il contenuto non esca dai bordi */
+    .special-content {
+        max-width: 100%;
+        overflow: hidden;
+    }
+}
+
+/* CORREZIONE PER PROBLEMI DI ALTEZZA E SPACING */
+@media (max-width: 768px) {
+    .special-menus .container {
+        padding: 0 10px;
+    }
+    
+    .special-subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+    
+    .section-title.special-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+}
+
+/* CORREZIONE PER I MARGINI DEI DOTS */
+@media (max-width: 768px) {
+    .special-dot {
+        margin: 1rem 0; /* Riduce il margin verticale eccessivo */
+    }
+}
+
+/* CORREZIONE PER PROBLEMI DI OVERFLOW ORIZZONTALE */
+@media (max-width: 768px) {
+    .special-carousel {
+        overflow: hidden;
+    }
+    
+    .special-carousel-track {
+        width: 100%;
+    }
+}
