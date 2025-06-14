@@ -396,7 +396,26 @@ function initializeDropdowns() {
 window.addEventListener('scroll', debouncedScrollHandler);
 
 // Remove this line, as it is invalid and unnecessary
-// window.removeEventListener('scroll', window.addEventListener);
+// window.removeEventListener('scroll', window.addEventListener);window.removeEventListener('scroll', window.addEventListener);
+function updateCarousel() {
+    const track = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (!track) return; // Prevents error if element is missing
+    
+    // Update track position
+    track.style.transform = `translateX(-${activeSlide * 100}%)`;
+    
+    // Update active states
+    slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === activeSlide);
+    });
+    
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === activeSlide);
+    });
+}
 
 // Initialize animations on page load
 window.addEventListener('load', function() {
