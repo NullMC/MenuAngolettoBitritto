@@ -8,12 +8,62 @@ let activeSpecialSlide = 0;
 const totalSpecialSlides = 3;
 let specialSlideInterval;
 
+// Performance optimization: Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeCarousel();
     initializeDropdowns();
     initializeSpecialCarousel();
+    
+    // Add touch event listeners to carousel (after DOM is ready)
+    initializeTouchEvents();
+    
+    // Initialize animations
+    initializeAnimations();
 });
+
+// Initialize touch events
+function initializeTouchEvents() {
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        carousel.addEventListener('touchstart', handleTouchStart, false);
+        carousel.addEventListener('touchend', handleTouchEnd, false);
+    }
+}
+
+// Initialize animations and observers
+function initializeAnimations() {
+    // Initialize scroll animations
+    animateOnScroll();
+    
+    // Initialize pie chart observer
+    observePieCharts();
+    
+    // Fade in hero content
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+        heroContent.style.opacity = '0';
+        heroContent.style.transform = 'translateY(30px)';
+        heroContent.style.transition = 'all 1s ease';
+        
+        setTimeout(() => {
+            heroContent.style.opacity = '1';
+            heroContent.style.transform = 'translateY(0)';
+        }, 500);
+    }
+}
 
 // Smooth scrolling function
 function scrollToSection(sectionId) {
@@ -29,18 +79,24 @@ function scrollToSection(sectionId) {
 // Mobile menu functions
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('show');
+    if (mobileMenu) {
+        mobileMenu.classList.toggle('show');
+    }
 }
 
 function closeMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.remove('show');
+    if (mobileMenu) {
+        mobileMenu.classList.remove('show');
+    }
 }
 
 // Dropdown menu functions
 function toggleDropdown(sectionId) {
     const content = document.getElementById(sectionId + '-content');
     const arrow = document.getElementById(sectionId + '-arrow');
+    
+    if (!content || !arrow) return;
     
     // Close all other dropdowns
     const allContents = document.querySelectorAll('.dropdown-content');
@@ -90,20 +146,17 @@ function toggleDropdown(sectionId) {
 }
 
 function initializeDropdowns() {
-    // Add click event listeners to all dropdown buttons
-    const dropdownButtons = document.querySelectorAll('.dropdown-button');
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const sectionId = this.onclick.toString().match(/toggleDropdown\('(.+)'\)/)[1];
-            toggleDropdown(sectionId);
-        });
-    });
+    // Non aggiungere event listeners ai dropdown buttons
+    // Lascia che l'onclick nell'HTML gestisca tutto
+    // Questa funzione può essere usata per altre inizializzazioni se necessario
 }
 
 // Carousel functions
 function initializeCarousel() {
-    startSlideShow();
-    updateCarousel();
+    if (document.getElementById('carouselTrack')) {
+        startSlideShow();
+        updateCarousel();
+    }
 }
 
 function nextSlide() {
@@ -129,6 +182,8 @@ function updateCarousel() {
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.dot');
     
+    if (!track) return; // Prevents error if element is missing
+    
     // Update track position
     track.style.transform = `translateX(-${activeSlide * 100}%)`;
     
@@ -151,16 +206,18 @@ function resetSlideShow() {
     startSlideShow();
 }
 
-// Carousel dot navigation (renamed to avoid conflict)
+// Carousel dot navigation
 function goToSlideNumber(slideIndex) {
     currentSlideGo(slideIndex);
 }
 
 // Special Menu Carousel Functions
 function initializeSpecialCarousel() {
-    startSpecialSlideShow();
-    updateSpecialCarousel();
-    animatePieCharts();
+    if (document.getElementById('specialCarouselTrack')) {
+        startSpecialSlideShow();
+        updateSpecialCarousel();
+        animatePieCharts();
+    }
 }
 
 function nextSpecialSlide() {
@@ -261,6 +318,8 @@ function animatePieChart(circle, percentage) {
 function observePieCharts() {
     const pieCharts = document.querySelectorAll('.pie-chart');
     
+    if (pieCharts.length === 0) return;
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -301,28 +360,21 @@ function animateOnScroll() {
     });
 }
 
-// Window scroll event
-window.addEventListener('scroll', function() {
+// Debounced scroll handler
+const debouncedScrollHandler = debounce(function() {
     animateOnScroll();
     
-    // Navbar background on scroll
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(26, 26, 26, 0.9)';
-        navbar.style.backdropFilter = 'blur(10px)';
-    } else {
-        navbar.style.background = 'transparent';
-        navbar.style.backdropFilter = 'none';
+    if (navbar) {
+        if (window.scrollY > 100) {
+            navbar.style.background = 'rgba(26, 26, 26, 0.9)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        } else {
+            navbar.style.background = 'transparent';
+            navbar.style.backdropFilter = 'none';
+        }
     }
-});
-
-// Window resize event
-window.addEventListener('resize', function() {
-    // Close mobile menu on resize
-    if (window.innerWidth > 768) {
-        closeMobileMenu();
-    }
-});
+}, 10);
 
 // Touch/swipe support for carousel
 let startX = 0;
@@ -350,13 +402,6 @@ function handleSwipe() {
     }
 }
 
-// Add touch event listeners to carousel
-const carousel = document.querySelector('.carousel');
-if (carousel) {
-    carousel.addEventListener('touchstart', handleTouchStart, false);
-    carousel.addEventListener('touchend', handleTouchEnd, false);
-}
-
 // Keyboard navigation
 document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowLeft') {
@@ -366,133 +411,48 @@ document.addEventListener('keydown', function(e) {
     } else if (e.key === 'Escape') {
         closeMobileMenu();
     }
-});document.addEventListener('DOMContentLoaded', function() {
-    initializeCarousel();
-    initializeDropdowns();
-    initializeSpecialCarousel();
-
-    // Add touch event listeners to carousel (after DOM is ready)
-    const carousel = document.querySelector('.carousel');
-    if (carousel) {
-        carousel.addEventListener('touchstart', handleTouchStart, false);
-        carousel.addEventListener('touchend', handleTouchEnd, false);
-    }
 });
 
-function initializeDropdowns() {
-    // Add click event listeners to all dropdown buttons
-    const dropdownButtons = document.querySelectorAll('.dropdown-button');
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const sectionId = this.dataset.sectionId;
-            if (sectionId) {
-                toggleDropdown(sectionId);
-            }
-        });
-    });
-}
-
-// Remove the immediate scroll handler and only use the debounced one
+// Window events
 window.addEventListener('scroll', debouncedScrollHandler);
 
-// Remove this line, as it is invalid and unnecessary
-// window.removeEventListener('scroll', window.addEventListener);window.removeEventListener('scroll', window.addEventListener);
-function updateCarousel() {
-    const track = document.getElementById('carouselTrack');
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.dot');
-    
-    if (!track) return; // Prevents error if element is missing
-    
-    // Update track position
-    track.style.transform = `translateX(-${activeSlide * 100}%)`;
-    
-    // Update active states
-    slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === activeSlide);
-    });
-    
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === activeSlide);
-    });
-}
-
-// Initialize animations on page load
-window.addEventListener('load', function() {
-    // Fade in hero content
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent) {
-        heroContent.style.opacity = '0';
-        heroContent.style.transform = 'translateY(30px)';
-        heroContent.style.transition = 'all 1s ease';
-        
-        setTimeout(() => {
-            heroContent.style.opacity = '1';
-            heroContent.style.transform = 'translateY(0)';
-        }, 500);
+window.addEventListener('resize', function() {
+    // Close mobile menu on resize
+    if (window.innerWidth > 768) {
+        closeMobileMenu();
     }
-    
-    // Initialize scroll animations
-    animateOnScroll();
-    
-    // Initialize pie chart observer
-    observePieCharts();
 });
 
 // Add loading animation styles
-document.head.insertAdjacentHTML('beforeend', `
-    <style>
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .navbar {
-            transition: all 0.3s ease;
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+window.addEventListener('load', function() {
+    // Add styles if not already present
+    if (!document.getElementById('dynamic-styles')) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-styles';
+        style.textContent = `
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.6s ease;
             }
-        }
-    </style>
-`);
-
-// Performance optimization: Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply debounce to scroll handler
-const debouncedScrollHandler = debounce(function() {
-    animateOnScroll();
-    
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(26, 26, 26, 0.9)';
-        navbar.style.backdropFilter = 'blur(10px)';
-    } else {
-        navbar.style.background = 'transparent';
-        navbar.style.backdropFilter = 'none';
+            
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .navbar {
+                transition: all 0.3s ease;
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     }
-}, 10);
-
-window.removeEventListener('scroll', window.addEventListener);
-window.addEventListener('scroll', debouncedScrollHandler);
+});

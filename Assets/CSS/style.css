@@ -270,10 +270,6 @@ body {
     transition: max-height 0.5s ease;
 }
 
-.dropdown-content.open {
-
-}
-
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
