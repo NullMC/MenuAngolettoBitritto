@@ -368,14 +368,6 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Order button functionality
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('order-button')) {
-        // You can customize this action
-        alert('Per ordinare, contattaci al +39 080 123 4567');
-    }
-});
-
 // Initialize animations on page load
 window.addEventListener('load', function() {
     // Fade in hero content
