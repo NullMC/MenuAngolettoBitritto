@@ -70,7 +70,7 @@ body {
   padding: 18px 40px;
 }
 .nav-logo .logo-img {
-  height: 72px;
+  height: 150px;
   width: auto;
   transition: var(--trans);
   filter: drop-shadow(0 2px 8px rgba(0,0,0,.4));
@@ -182,10 +182,10 @@ body {
   animation: fadeUp .9s .65s ease forwards;
 }
 .hero-desc {
-  font-size: .97rem;
+  font-size: 1rem;
   color: rgba(255,255,255,.65);
   line-height: 1.9;
-  max-width: 480px;
+  max-width: 550px;
   margin-bottom: 40px;
   opacity: 0;
   animation: fadeUp .9s .8s ease forwards;
@@ -773,7 +773,7 @@ body {
 
 @media (max-width: 768px) {
   .nav-inner { padding: 14px 20px; }
-  .nav-logo .logo-img { height: 56px; }
+  .nav-logo .logo-img { height: 70px; }
 
   .hero::after { clip-path: polygon(100% 60%, 0 100%, 100% 100%); }
 
